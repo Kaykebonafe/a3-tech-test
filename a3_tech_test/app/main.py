@@ -3,7 +3,8 @@ from a3_tech_test.app.routers import index, chat
 from a3_tech_test.__init__ import __version__
 
 app = FastAPI(
-    version=__version__
+    version=__version__,
+    docs_url="/docs"
 )
 
 app.include_router(
