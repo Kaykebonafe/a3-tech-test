@@ -1,10 +1,12 @@
-from a3_tech_test.app.modules.models.gemini_api import get_query_engine
+from a3_tech_test.app.modules.models.gemini_api import query_engine
 from a3_tech_test.app.interfaces.chat import chat_message
 
-
 async def achat(query: chat_message):
-    query_engine = await get_query_engine()
+    print("iniciando achar")
+    response = await query_engine.aquery(query.query)  
     
-    response = await query_engine.achat(query.query)  
+    print("terminando achat")
     
-    return response
+    return {
+        "response": response.response # .sources[0].content
+    }
