@@ -8,10 +8,10 @@ O teste consiste na criação de um assistente usando RAG (Retrieval Augumented 
 
 1. Clone o repositório
 2. Instale os pacotes com pip install -r requirements.txt ou pip install -r requirements.txt --user.
-2.1. Se preferir, pode instalar via setup.py, apenas utilizando o comando pip install .
-2.2. Ou ainda, pode utilizar a imagem docker disponível, para fazer o build use o comando docker build -t sua_tag ., em seguida use docker run -d -p 8080:90 --name nome_do_container sua_tag. Se estiver usando a imagem docker, pule o passo seguinte.
-3. Para executar o projeto, cole o seguinte comando em seu terminal: python -m uvicorn a3_tech_test.app.main:app --reload --host "0.0.0.0" --port "5000" --log-level trace
-4. Para mandar as requisições, pode-se usar o Postman ou qualquer outra aplicação de sua preferência. Porém, você pode utilizar o arquivo test.py para testar as requisições. O formato aceito pela API é o seguinte: 
+3. Se preferir, pode instalar via setup.py, apenas utilizando o comando pip install .
+4. Ou ainda, pode utilizar a imagem docker disponível, para fazer o build use o comando docker build -t sua_tag ., em seguida use docker run -d -p 8080:90 --name nome_do_container sua_tag. Se estiver usando a imagem docker, pule o passo seguinte.
+5. Para executar o projeto, cole o seguinte comando em seu terminal: python -m uvicorn a3_tech_test.app.main:app --reload --host "0.0.0.0" --port "5000" --log-level trace
+6. Para mandar as requisições, pode-se usar o Postman ou qualquer outra aplicação de sua preferência. Porém, você pode utilizar o arquivo test.py para testar as requisições. O formato aceito pela API é o seguinte: 
 {
     "query": "sua_query"
 }
