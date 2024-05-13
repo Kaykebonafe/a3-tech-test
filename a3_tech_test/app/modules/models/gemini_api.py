@@ -17,7 +17,7 @@ import pymupdf
 import pathlib
 import os
 
-load_dotenv()
+load_dotenv(dotenv_path=f"a3_tech_test/.env")
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 PERSIST_DIR = "./chroma_db"
