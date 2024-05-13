@@ -1,19 +1,20 @@
 # a3-tech-test
 
-Para instalar todos os pacotes utilizados no projeto, abra seu terminal e digite pip install -r requirements.txt, se sua versão do python for a 3.12, use pip install -r requirements.txt --user.
+Teste técnico para a A3Data.
 
-Uma vez que todas as dependências estiverem instaladas, digite python -m uvicorn a3_tech_test.app.main:app --reload --host "0.0.0.0" --port "5000" --log-level INFO. Com isso, a aplicação estará ativa, só mandar requisições.
+O teste consiste na criação de um assistente usando RAG (Retrieval Augumented Generation) com o intuito de responder à perguntas de médicos sobre um protocolo disponibilizado pelo INCA(Instituto Nacional de Câncer).
 
-Caso VSCode seja sua IDE, instale as extensões Python, Python Debugger e então apenas aperte F5.
+## Instalação
 
-Para mandar as requisições, pode-se usar o Postman ou qualquer outra aplicação de sua preferência. Porém, você pode utilizar o arquivo test.py para testar as requisições.
-
-O formato aceito pela API é o seguinte: 
+1. Clonne o repositório
+2. Instale os pacotes com pip install -r requirements.txt ou pip install -r requirements.txt --user.
+3. Para executar o projeto, cole o seguinte comando em seu terminal: python -m uvicorn a3_tech_test.app.main:app --reload --host "0.0.0.0" --port "5000" --log-level trace
+4. Para mandar as requisições, pode-se usar o Postman ou qualquer outra aplicação de sua preferência. Porém, você pode utilizar o arquivo test.py para testar as requisições. O formato aceito pela API é o seguinte: 
 {
     "query": "sua_query"
 }
 
-Seguem alguns exemplos de perguntas:
+5. Exemplo de perguntas:
 {
     "query": "Como parar de fumar?"
 }
