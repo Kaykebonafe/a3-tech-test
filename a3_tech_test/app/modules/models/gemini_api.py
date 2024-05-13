@@ -6,7 +6,9 @@ from llama_index.core import (
     VectorStoreIndex,
     StorageContext
 )
+from a3_tech_test.app.utils.logs import CustomLogger
 from llama_index.llms.gemini import Gemini
+from dotenv import load_dotenv
 
 import google.generativeai as genai
 import chromadb
@@ -14,25 +16,33 @@ import pymupdf
 import pathlib
 import os
 
+load_dotenv()
+
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 PERSIST_DIR = "./chroma_db"
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
+logger = CustomLogger()
 
-txt_path = "a3_tech_test/app/data/protocolo-clinico-e-diretrizes-terapeuticas-do-tabagismo.txt"
+txt_path = "a3_tech_test/app/data/"
+file_name = "protocolo-clinico-e-diretrizes-terapeuticas-do-tabagismo.txt"
 if not os.path.exists(txt_path):
+    logger.info(f"Creating folder in: {txt_path}")
+    os.makedirs(txt_path)
     pdf_path = "a3_tech_test/app/raw_data/protocolo-clinico-e-diretrizes-terapeuticas-do-tabagismo.pdf"
-    with pymupdf.open(pdf_path) as doc:  # open document
+    with pymupdf.open(pdf_path) as doc:  
         text = chr(12).join([page.get_text() for page in doc])
-    pathlib.Path("a3_tech_test/app/data/protocolo-clinico-e-diretrizes-terapeuticas-do-tabagismo.txt").write_bytes(text.encode())
+    logger.info(f"Creating file: {file_name}")
+    pathlib.Path(f"a3_tech_test/app/data/{file_name}").write_bytes(text.encode())
 
 llm = Gemini(
-    model_name='models/gemini-1.0-pro',
+    model_name='models/gemini-1.0-pro-latest',
     max_tokens=2048,
     api_key=GOOGLE_API_KEY,
     temperature=0.2,
-    top_p=0.3
+    top_p=0.3,
+    top_k=5
 )
 
 embed_model = GeminiEmbedding(
@@ -46,8 +56,9 @@ INCA (Instituto Nacional de Câncer).
 Seu papel é se comunicar de forma informativa com seus pacientes.
 Responda à todas perguntas somente e necessariamente em português. 
 Suas ações devem seguir as seguintes regras:
-1 - Suas respostas devem ser o mais informativas possíveis.
+1 - Suas respostas devem ser o mais informativas possíveis, com muitos detalhes.
 2 - Suas respostas devem se basear estritamente no que consta no protocolo clínico do INCA.
+3 - Suas respostas possuem tamanho indefinido.
 """
 
 service_context = ServiceContext.from_defaults(
@@ -59,6 +70,8 @@ service_context = ServiceContext.from_defaults(
 )   
 
 if os.path.exists(PERSIST_DIR):
+    logger.info(f"Embeddings database exists in path: {PERSIST_DIR}")
+    
     db = chromadb.PersistentClient(
         path=PERSIST_DIR
     )
@@ -81,7 +94,8 @@ if os.path.exists(PERSIST_DIR):
     )
 
 else:
-    print("entrei else usando documentos")
+    logger.info(f"Embeddings database doesn't exists, creating it in {PERSIST_DIR}")
+    
     documents = SimpleDirectoryReader("a3_tech_test/app/data/").load_data()
    
     db = chromadb.PersistentClient(
@@ -105,5 +119,5 @@ else:
         embed_model=embed_model
     ) 
 
-    
+logger.info("Creating query engine")
 query_engine = index.as_query_engine()

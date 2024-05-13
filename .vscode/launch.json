@@ -10,7 +10,7 @@
         "request": "launch",
         "module": "uvicorn",
         "cwd": "${workspaceFolder}",
-        "args": ["a3_tech_test.app.main:app", "--reload", "--host", "0.0.0.0", "--port", "5000"],
+        "args": ["a3_tech_test.app.main:app", "--reload", "--host", "0.0.0.0", "--port", "5000", "--log-level", "trace"],
         "jinja": true,
         "justMyCode": true
       }
