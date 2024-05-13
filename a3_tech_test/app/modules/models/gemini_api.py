@@ -10,6 +10,7 @@ from a3_tech_test.app.utils.logs import CustomLogger
 from llama_index.llms.gemini import Gemini
 from dotenv import load_dotenv
 
+
 import google.generativeai as genai
 import chromadb
 import pymupdf
